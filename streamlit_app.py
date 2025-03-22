@@ -1,5 +1,4 @@
 # Importer les bibliothèques nécessaires
-import streamlit_app as st
 import pickle
 import json
 import numpy as np
