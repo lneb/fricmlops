@@ -1,4 +1,4 @@
-from app import model_pred
+from streamlit_app import model_pred
 
 new_data = {'Age': 68,
             'InterestRate': 10,
