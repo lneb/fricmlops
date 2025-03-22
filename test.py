@@ -1,11 +1,10 @@
 from app import model_pred
 
 new_data = {'Age': 68,
-            'RestingBP': 150,
-            'Cholesterol': 195,
-            'Oldpeak': 0.0,
-            'FastingBS': 1,
-            'MaxHR': 132,
+            'InterestRate': 10,
+            'LoanTerm': 30,
+            'MonthsEmployed': 100,
+            'Income': 120000,
             }
 
 

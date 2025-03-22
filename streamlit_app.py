@@ -13,22 +13,22 @@ def model_pred(features, modele):
 def charger_modele():
     # Charger le modèle à partir du fichier Pickle
     with open('modele.pkl', 'rb') as fichier_modele:
-        modele = pickle.load(fichier_modele)
-    return modele
+        modele_local = pickle.load(fichier_modele)
+    return modele_local
 
 def charger_min_max():
     # Charger les valeurs min et max des caractéristiques depuis le fichier JSON
     with open('feature_min_max.json', 'r') as json_file:
-        min_max_dict = json.load(json_file)
-    return min_max_dict
+        min_max_dict_local = json.load(json_file)
+    return min_max_dict_local
 
 def charger_target_mapping():
     # Charger le mapping des targets depuis le fichier JSON
     with open('target_encoding.json', 'r') as json_file:
-        target_mapping = json.load(json_file)
+        target_mapping_local = json.load(json_file)
     # Convertir les clés en entiers
-    target_mapping = {int(key): value for key, value in target_mapping.items()}
-    return target_mapping
+    target_mapping_local = {int(key): value for key, value in target_mapping_local.items()}
+    return target_mapping_local
 
 # Charger les valeurs min et max
 min_max_dict = charger_min_max()
