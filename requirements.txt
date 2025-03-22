@@ -13,3 +13,4 @@ xgboost==2.0.2
 black
 pylint
 flask
+pytest==7.1.2
