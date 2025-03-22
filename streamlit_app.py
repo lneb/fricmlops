@@ -62,4 +62,6 @@ prediction_decoded = target_mapping[prediction_encoded[0]]
 
 # Afficher la prédiction
 st.markdown(
-    f"<p style='font-size:24px; font
+    "<p style='font-size:24px; font-weight:bold;'>Load default prediction value: {}</p>".format(prediction_decoded),
+    unsafe_allow_html=True
+)
