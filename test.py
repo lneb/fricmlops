@@ -10,4 +10,4 @@ new_data = {'Age': 68,
 
 def test_predict():
     prediction = model_pred(new_data)
-    assert prediction == 0, "incorrect prediction"
+    assert prediction == 1, "incorrect prediction"

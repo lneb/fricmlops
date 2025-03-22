@@ -4,7 +4,7 @@ import pandas as pd
 
 
 app = Flask(__name__)
-model = pickle.load(open("catboost_model-2.pkl", "rb"))
+model = pickle.load(open("modele.pkl", "rb"))
 
 
 def model_pred(features):
