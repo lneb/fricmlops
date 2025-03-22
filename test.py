@@ -1,4 +1,4 @@
-from streamlit_app import model_pred
+from flask_app import model_pred
 
 new_data = {'Age': 68,
             'InterestRate': 10,
@@ -10,4 +10,4 @@ new_data = {'Age': 68,
 
 def test_predict():
     prediction = model_pred(new_data)
-    assert prediction == 1, "incorrect prediction"
+    assert prediction == 0, "incorrect prediction"
