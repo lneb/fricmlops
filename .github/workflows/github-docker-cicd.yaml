@@ -48,12 +48,12 @@ jobs:
 
         - name: Format
           run: |
-            black streamlit_app.py
+            black flask_app.py
 # The fourth step formats the app.py file using the black code formatter.
 
         - name: Lint
           run: |
-            pylint --disable=R,C  streamlit_app.py
+            pylint --disable=R,C  flask_app.py
 #The fifth step performs linting on the app.py file using pylint.
 #The --disable=R,C flag disables specific pylint checks.
 
