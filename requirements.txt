@@ -12,3 +12,4 @@ nbformat==5.10.4
 xgboost==2.0.2
 black
 pylint
+flask
