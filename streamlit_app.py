@@ -3,8 +3,9 @@ import pickle
 import json
 import numpy as np
 import pandas as pd
+import streamlit as st  # Ajout de l'import Streamlit
 
-def model_pred(features):
+def model_pred(features, modele):
     test_data = pd.DataFrame([features])
     prediction = modele.predict(test_data)
     return int(prediction[0])
@@ -61,6 +62,4 @@ prediction_decoded = target_mapping[prediction_encoded[0]]
 
 # Afficher la prédiction
 st.markdown(
-    f"<p style='font-size:24px; font-weight:bold;'>Load default prediction value: {prediction_decoded}</p>", 
-    unsafe_allow_html=True
-)
+    f"<p style='font-size:24px; font
