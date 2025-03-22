@@ -1,20 +1,24 @@
 # Importer les bibliothèques nécessaires
 import pickle
 import json
-import numpy as np
 import pandas as pd
 import streamlit as st  # Ajout de l'import Streamlit
 
-def model_pred(features, modele_global):
+# Définir le modèle global en dehors des fonctions
+modele_global = None
+
+def model_pred(features):
+    global modele_global  # Utiliser la variable globale directement
     test_data = pd.DataFrame([features])
     prediction = modele_global.predict(test_data)
     return int(prediction[0])
 
 def charger_modele():
+    global modele_global  # Utiliser la variable globale directement
     # Charger le modèle à partir du fichier Pickle avec un encodage spécifié
     with open('modele.pkl', 'rb') as fichier_modele:
-        modele_local = pickle.load(fichier_modele)
-    return modele_local
+        modele_global = pickle.load(fichier_modele)
+    return modele_global
 
 def charger_min_max():
     # Charger les valeurs min et max des caractéristiques depuis le fichier JSON avec un encodage spécifié
@@ -36,16 +40,4 @@ min_max_dict = charger_min_max()
 # Interface utilisateur Streamlit
 st.title("Load default prediction app")
 
-# Créer des curseurs pour chaque caractéristique en utilisant les noms et valeurs depuis le JSON
-caracteristiques_entree = []
-for feature, limits in min_max_dict.items():
-    caracteristique = st.slider(
-        f"{feature}", 
-        float(limits['min']), 
-        float(limits['max']), 
-        float((limits['min'] + limits['max']) / 2)
-    )
-    caracteristiques_entree.append(caracteristique)
-
-# Charger le modèle et le mapping de la cible
-modele_global = charger_modele()  # Renommé en 'modele
+# Créer des curseurs pour chaque caractéristique en utilisant les noms et
