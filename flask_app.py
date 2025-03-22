@@ -34,12 +34,12 @@ def predict():
         if prediction[0] == 1:
             return render_template(
                 "index.html",
-                prediction_text="Kindly make an appointment with the doctor!",
+                prediction_text="Default = 1",
             )
 
         else:
             return render_template(
-                "index.html", prediction_text="You are well. No worries :)"
+                "index.html", prediction_text="Default = 0"
             )
 
     else:
