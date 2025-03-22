@@ -1,0 +1,5 @@
+readme.md
+.git*
+/venv
+/model_and_data
+/mlruns

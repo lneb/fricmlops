@@ -1,0 +1,22 @@
+{
+    "Age": {
+        "min": 18.0,
+        "max": 69.0
+    },
+    "InterestRate": {
+        "min": 2.0,
+        "max": 25.0
+    },
+    "LoanTerm": {
+        "min": 12.0,
+        "max": 60.0
+    },
+    "MonthsEmployed": {
+        "min": 0.0,
+        "max": 119.0
+    },
+    "Income": {
+        "min": 15000.0,
+        "max": 149999.0
+    }
+}
