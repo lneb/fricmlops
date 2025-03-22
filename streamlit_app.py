@@ -1,70 +1,50 @@
-# Importer les bibliothèques nécessaires
+from flask import Flask, render_template, request
 import pickle
-import json
-import numpy as np
 import pandas as pd
-import streamlit as st  # Ajout de l'import Streamlit
 
-# Fonction pour prédire à partir du modèle
-def model_pred(features, modele):
+
+app = Flask(__name__)
+model = pickle.load(open("catboost_model-2.pkl", "rb"))
+
+
+def model_pred(features):
     test_data = pd.DataFrame([features])
-    prediction = modele.predict(test_data)
+    prediction = model.predict(test_data)
     return int(prediction[0])
 
-# Charger le modèle à partir du fichier Pickle
-def charger_modele():
-    with open("modele.pkl", "rb") as fichier_modele:
-        modele = pickle.load(fichier_modele)
-    return modele
 
-# Charger les valeurs min et max des caractéristiques depuis le fichier JSON
-def charger_min_max():
-    with open("feature_min_max.json", "r", encoding="utf-8") as json_file:
-        min_max_dict_local = json.load(json_file)
-    return min_max_dict_local
+@app.route("/", methods=["GET"])
+def Home():
+    return render_template("index.html")
 
-# Charger le mapping des targets depuis le fichier JSON
-def charger_target_mapping():
-    with open("target_encoding.json", "r", encoding="utf-8") as json_file:
-        target_mapping_local = json.load(json_file)
-    # Convertir les clés en entiers
-    target_mapping_local = {
-        int(key): value for key, value in target_mapping_local.items()
-    }
-    return target_mapping_local
 
-# Charger les valeurs min et max
-min_max_dict = charger_min_max()
+@app.route("/predict", methods=["POST"])
+def predict():
+    if request.method == "POST":
+        Age = int(request.form["Age"])
+        InterestRate = int(request.form["InterestRate"])
+        LoanTerm = int(request.form["LoanTerm"])
+        MonthsEmployed = float(request.form["MonthsEmployed"])
+        Income = int(request.form["Income"])
 
-# Interface utilisateur Streamlit
-st.title("Load default prediction app")
+        prediction = model.predict(
+            [[Age, InterestRate, LoanTerm, MonthsEmployed, Income]]
+        )
 
-# Créer des curseurs pour chaque caractéristique en utilisant les noms et valeurs depuis le JSON
-caracteristiques_entree = []
-for feature, limits in min_max_dict.items():
-    caracteristique = st.slider(
-        f"{feature}",
-        float(limits["min"]),
-        float(limits["max"]),
-        float((limits["min"] + limits["max"]) / 2),
-    )
-    caracteristiques_entree.append(caracteristique)
+        if prediction[0] == 1:
+            return render_template(
+                "index.html",
+                prediction_text="Kindly make an appointment with the doctor!",
+            )
 
-# Charger le modèle et le mapping de la cible
-modele = charger_modele()  # Charger le modèle une seule fois
-target_mapping = charger_target_mapping()
+        else:
+            return render_template(
+                "index.html", prediction_text="You are well. No worries :)"
+            )
 
-# Préparer les caractéristiques pour la prédiction
-caracteristiques = np.array([caracteristiques_entree])
+    else:
+        return render_template("index.html")
 
-# Prévoir la classe avec le modèle
-prediction_encoded = modele.predict(caracteristiques)
 
-# Décoder la prédiction
-prediction_decoded = target_mapping[prediction_encoded[0]]
-
-# Afficher la prédiction
-st.markdown(
-    f"<p style='font-size:24px; font-weight:bold;'>Load default prediction value: {prediction_decoded}</p>",
-    unsafe_allow_html=True,
-)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
